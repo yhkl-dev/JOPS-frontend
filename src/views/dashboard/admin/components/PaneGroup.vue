@@ -49,7 +49,7 @@
 
 <script>
   import CountTo from 'vue-count-to'
-  import { getSystemInfo } from '@/api/resource'
+  // import { getSystemInfo } from '@/api/resource'
 
   export default {
     data() {
@@ -64,12 +64,12 @@
       CountTo
     },
     created() {
-      getSystemInfo().then(res => {
-        this.projectNum = res.project_num
-        this.resourceNum = res.resource_num
-        this.workOrderNum = res.workorder_num
-        this.productsNum = res.product_num
-      })
+      // getSystemInfo().then(res => {
+      //   this.projectNum = res.project_num
+      //   this.resourceNum = res.resource_num
+      //   this.workOrderNum = res.workorder_num
+      //   this.productsNum = res.product_num
+      // })
     }
   }
 </script>

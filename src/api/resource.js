@@ -1,5 +1,44 @@
 import request from '@/utils/request'
 
+export function getCloudList(params) {
+  return request({
+    url: '/resource/',
+    method: 'get',
+    params
+  })
+}
+
+export function getCloudTypeList(params) {
+  return request({
+    url: '/resource_type/',
+    method: 'get',
+    params
+  })
+}
+
+export function getCloudResourceList(params) {
+  return request({
+    url: '/instance/',
+    method: 'get',
+    params
+  })
+}
+
+export function updateCloudResourceList(id, data) {
+  return request({
+    url: '/instance/' + id + '/',
+    method: 'put',
+    data
+  })
+}
+
+export function refetchServerList() {
+  return request({
+    url: '/update_resource_server/',
+    method: 'post'
+  })
+}
+
 // 获取资源列表
 export function getResourceList(params) {
   return request({

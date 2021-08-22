@@ -31,7 +31,6 @@
   import PaneGroup from './components/PaneGroup'
   import LineChart from './components/LineChart'
   import RaddarChart from './components/RaddarChart'
-  import { getWorkOrderHistoryCount, getLineChartData } from '@/api/workorder'
 
   export default {
     name: 'dashboard',
@@ -55,16 +54,6 @@
     },
     methods: {
       fetchData() {
-        getWorkOrderHistoryCount().then(
-          res => {
-            this.pieData = res
-          }
-        )
-        getLineChartData().then(
-          res => {
-            this.lineData = res
-          }
-        )
       }
     },
     created() {

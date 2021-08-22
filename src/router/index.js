@@ -24,29 +24,14 @@ const UserList = () => import('@/views/users/UserList')
 const GroupList = () => import('@/views/users/GroupList')
 const GroupPermissionList = () => import('@/views/users/GroupPermissionList')
 
-/* 监控管理 */
-const Zabbix = () => import('@/views/monitor/zabbix')
-
 /* 资源管理 */
 const Resources = () => import('@/views/resources/Resources')
-const WebShellAdmin = () => import('@/views/resources/WebShellAdmin')
+const CloudResource = () => import('@/views/resources/cloud/Index')
+const CloudServerInstance = () => import('@/views/resources/cloudServer/Index')
 const ProductList = () => import('@/views/resources/ProductList')
-
-/* 配置中心 */
-const Task = () => import('@/views/task/Task')
-const Playbook = () => import('@/views/task/Playbook')
-
-/* 巡检报告 */
-const ServerReport = () => import('@/views/report/ServerReport')
-
-/* 工单系统*/
-const WorkOrderTask = () => import('@/views/workorder/workOrderTask')
-const WorkOrderModelManagement = () => import('@/views/workorder/WorkOrderModelManagement')
-const workOrderHistory = () => import('@/views/workorder/workOrderHistory')
-const workOrderChart = () => import('@/views/workorder/workOrderChart')
-
 /* 项目管理*/
-const ProjectList = () => import('@/views/project/ProjectList')
+// const ProjectList = () => import('@/views/project/ProjectList')
+const Project = () => import('@/views/project/Index')
 
 /* 个人中心 */
 const Profile = () => import('@/views/profile')
@@ -69,8 +54,8 @@ export const constantRouterMap = [
     children: [{
       path: '',
       component: Dashboard,
-      name: '首页',
-      meta: { title: '首页', icon: 'dashboard', noCache: true }
+      name: 'Dashboard',
+      meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
     }]
   },
   {
@@ -82,8 +67,8 @@ export const constantRouterMap = [
       {
         path: 'index',
         component: Profile,
-        name: '个人中心',
-        meta: { title: '个人中心', icon: 'user', noCache: true }
+        name: 'User Center',
+        meta: { title: 'User Center', icon: 'user', noCache: true }
       }
     ]
   },
@@ -91,169 +76,95 @@ export const constantRouterMap = [
     path: '/users',
     component: Layout,
     redirect: '/users/list',
-    name: '用户管理',
+    name: 'User Manage',
     meta: {
-      title: '用户管理',
+      title: 'User Management',
       icon: 'user'
     },
     children: [
       {
         path: 'list',
         component: UserList,
-        name: '用户列表',
-        meta: { title: '用户列表', icon: 'user' }
+        name: 'User List',
+        meta: { title: 'User List', icon: 'user' }
       },
       {
         path: 'group',
         component: GroupList,
-        name: '角色',
-        meta: { title: '角色', icon: 'solution' }
+        name: 'Role',
+        meta: { title: 'Role', icon: 'solution' }
       },
       {
         path: 'group/groupPermission',
         component: GroupPermissionList,
-        name: '权限列表',
-        meta: { title: '权限列表', icon: 'user' },
+        name: 'Permission',
+        meta: { title: 'Permission List', icon: 'user' },
         hidden: true
       }
     ]
   },
   {
-    path: '/monitor',
+    path: '/project',
     component: Layout,
-    name: '监控管理',
+    name: 'project manage',
+    redirect: '/project/index',
+    hidden: true,
     meta: {
-      title: '监控管理',
-      icon: 'user'
-    },
-    children: [
-      {
-        path: 'zabbix',
-        component: Zabbix,
-        name: 'zabbix',
-        meta: { title: 'zabbix', icon: 'user' }
-      }
-    ]
-  },
-  {
-    path: '/project_management',
-    component: Layout,
-    name: '项目管理',
-    meta: {
-      title: '项目管理',
+      title: 'PROJECT MANAGE',
       icon: 'project'
     },
     children: [
       {
-        path: 'project_list',
-        component: ProjectList,
-        name: '项目列表',
-        meta: { title: '项目列表', icon: 'project' }
+        path: 'index',
+        component: Project,
+        name: 'PROJECT LIST',
+        meta: { title: 'PROJECT LIST', icon: 'project' }
       }
     ]
   },
   {
-    path: '/workorder',
+    path: '/product',
     component: Layout,
-    name: '工单',
+    name: 'product manage',
     meta: {
-      title: '工单',
-      icon: 'order'
+      title: 'PRODUCT MANAGE',
+      icon: 'user'
     },
     children: [
       {
-        path: 'my_workorder',
-        component: WorkOrderTask,
-        name: '工单列表',
-        meta: { title: '工单列表', icon: 'order' }
-      },
-      {
-        path: 'work_order_model_manage',
-        component: WorkOrderModelManagement,
-        name: '模板管理',
-        meta: { title: '模板管理', icon: 'order' }
-      },
-      {
-        path: 'work_order_history',
-        component: workOrderHistory,
-        name: '工单历史',
-        meta: { title: '工单历史', icon: 'order' }
-      },
-      {
-        path: 'work_order_chart',
-        component: workOrderChart,
-        name: '工单历史趋势',
-        meta: { title: '工单历史趋势', icon: 'order' }
+        path: 'product',
+        component: ProductList,
+        name: 'product line',
+        meta: { title: 'product line', icon: 'list', affix: true }
       }
     ]
   },
   {
     path: '/resources',
     component: Layout,
-    name: '资源管理',
+    name: 'resource manage',
     meta: {
-      title: '资源管理',
+      title: 'RESOURCE MANAGE',
       icon: 'user'
     },
     children: [
       {
-        path: 'resourceList',
+        path: 'cloudResource',
+        component: CloudResource,
+        name: 'cloud resource list',
+        meta: { title: 'CLOUD', icon: 'user' }
+      },
+      {
+        path: 'serverResourceList',
+        component: CloudServerInstance,
+        name: 'SERVER LIST',
+        meta: { title: 'SERVER LIST', icon: 'user' }
+      },
+      {
+        path: 'databaseResourceList',
         component: Resources,
-        name: '资源列表',
-        meta: { title: '资源列表', icon: 'user' }
-      },
-      {
-        path: 'product',
-        component: ProductList,
-        name: '业务线',
-        meta: { title: '业务线', icon: 'list', affix: true }
-      },
-      {
-        path: 'webssh',
-        component: WebShellAdmin,
-        name: 'webssh',
-        meta: { title: 'Webssh', icon: 'Webssh', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/report',
-    component: Layout,
-    name: '智能运维',
-    meta: {
-      title: '智能运维',
-      icon: 'documentation'
-    },
-    children: [
-      {
-        path: 'server_report',
-        component: ServerReport,
-        name: 'serverreport',
-        meta: { title: '运维报告', icon: 'documentation' }
-      }
-    ]
-  },
-  {
-    path: '/task',
-    component: Layout,
-    redirect: '/task/task_list',
-    name: '配置中心',
-    meta: {
-      title: '配置中心',
-      icon: 'task'
-    },
-    children: [
-      {
-        path: 'task_list',
-        component: Task,
-        name: 'task_list',
-        meta: { title: '任务列表', icon: 'task' }
-      },
-      {
-        path: 'playbook',
-        component: Playbook,
-        name: 'playbook',
-        meta: { title: 'Playbook', icon: 'task', affix: true }
+        name: 'database resource list',
+        meta: { title: 'DATABASE LIST', icon: 'user' }
       }
     ]
   },

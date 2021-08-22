@@ -3,7 +3,32 @@ import request from '@/utils/request'
 // project
 export function getProjectList(params) {
   return request({
-    url: '/projectList/',
+    url: '/project/',
+    method: 'get',
+    params
+  })
+}
+
+export function addProject(data) {
+  return request({
+    url: '/project/',
+    method: 'post',
+    data
+  })
+}
+
+export function updateProject(id, params) {
+  return request({
+    url: '/project/' + id + '/',
+    method: 'put',
+    data: params
+  })
+}
+
+// project type
+export function getProjectTypeList(params) {
+  return request({
+    url: '/project_type/',
     method: 'get',
     params
   })

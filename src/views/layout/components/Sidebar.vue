@@ -14,7 +14,6 @@
                   <svg-icon :icon-class="item.icon"></svg-icon>
                   <span>{{ item.label }}</span>
               </template>
-
               <template v-for="(child, _index) in item.children" v-if="child.show">
                   <router-link :to="item.path+child.path" :key="_index">
                       <el-menu-item :index="item.path+child.path">
