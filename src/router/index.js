@@ -28,7 +28,8 @@ const GroupPermissionList = () => import('@/views/users/GroupPermissionList')
 const Resources = () => import('@/views/resources/Resources')
 const CloudResource = () => import('@/views/resources/cloud/Index')
 const CloudServerInstance = () => import('@/views/resources/cloudServer/Index')
-const ProductList = () => import('@/views/resources/ProductList')
+// const ProductList = () => import('@/views/resources/ProductList')
+const Product = () => import('@/views/product/Index')
 /* 项目管理*/
 // const ProjectList = () => import('@/views/project/ProjectList')
 const Project = () => import('@/views/project/Index')
@@ -125,6 +126,8 @@ export const constantRouterMap = [
   {
     path: '/product',
     component: Layout,
+    redirect: '/product/index',
+    hidden: true,
     name: 'product manage',
     meta: {
       title: 'PRODUCT MANAGE',
@@ -132,8 +135,8 @@ export const constantRouterMap = [
     },
     children: [
       {
-        path: 'product',
-        component: ProductList,
+        path: 'index',
+        component: Product,
         name: 'product line',
         meta: { title: 'product line', icon: 'list', affix: true }
       }

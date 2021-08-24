@@ -1,24 +1,25 @@
 <template>
     <scroll-bar>
-      <el-menu router mode="vertical" unique-opened :default-active="onRouters" :collapse="isCollapse" background-color="#304156" text-color="#fff" active-text-color="#409EFF">
+      <el-menu router mode="vertical" unique-opened :default-active="onRouters" :collapse="isCollapse" background-color="#bdc3c7" text-color="#131100" active-text-color="#2c3e50">
+<!--      <el-menu router mode="vertical" unique-opened :default-active="onRouters" :collapse="isCollapse" background-color="#304156" text-color="#fff" active-text-color="#409EFF">-->
         <template v-for="(item, index) in routes">
           <router-link v-if="item.children.length===0" :to="item.path" :key="index">
             <el-menu-item :index="item.path" class="submenu-title-noDropdown">
                 <svg-icon :icon-class="item.icon"></svg-icon>
-                <span>{{item.label}}</span>
+                <span style="font-weight: bolder">{{item.label}}</span>
             </el-menu-item>
           </router-link>
 
           <el-submenu v-else :index="item.path" :key="index">
               <template slot="title">
                   <svg-icon :icon-class="item.icon"></svg-icon>
-                  <span>{{ item.label }}</span>
+                  <span style="font-weight: bolder">{{ item.label }}</span>
               </template>
               <template v-for="(child, _index) in item.children" v-if="child.show">
                   <router-link :to="item.path+child.path" :key="_index">
                       <el-menu-item :index="item.path+child.path">
                           <!-- <svg-icon :icon-class="item.icon"></svg-icon> -->
-                          <span>{{child.label}}</span>
+                          <span style="font-weight: bolder">{{child.label}}</span>
                       </el-menu-item>
                   </router-link>
               </template>

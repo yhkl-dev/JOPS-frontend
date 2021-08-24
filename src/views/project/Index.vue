@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="search-class">
+    <div class="filter-container">
       <el-row :gutter="10">
         <el-col :span="5">
           <el-button size="mini" type="primary" @click="handleAddProject">Add Project</el-button>
@@ -22,6 +22,7 @@
       </el-table-column>
       <el-table-column prop="github_repo_url" label="GITHUB URL" align="center" width="200px"></el-table-column>
       <el-table-column prop="belong_group" label="Belong Group" align="center"></el-table-column>
+      <el-table-column prop="belong_product" label="Product Name" align="center"></el-table-column>
       <el-table-column prop="deployment_server_dev" label="Development ENV" align="center"></el-table-column>
       <el-table-column prop="deployment_server_prod" label="Product ENV" align="center"></el-table-column>
       <el-table-column label="Operators" align="center">
@@ -31,7 +32,13 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="dev_users_list" label="Developers" align="center"></el-table-column>
+      <el-table-column label="Developers" align="center">
+        <template slot-scope="scope">
+          <div v-for="(item, value) in scope.row.dev_users_list" :key="value">
+            <el-tag type="info">{{ item.username }}</el-tag>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="description" label="Description" align="center"></el-table-column>
       <el-table-column prop="update_time" label="Update Time" align="center"></el-table-column>
       <el-table-column prop="" label="OPTIONS" align="center" width="200px">
@@ -93,6 +100,21 @@
                 <el-option v-for="(item,value) in groupList"
                            :key="value"
                            :label="item.name"
+                           :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Product Name: ">
+              <el-select v-model="projectForm.belong_product_id"
+                         style="width:100%"
+                         placeholder="Please choose role"
+                         clearable
+                         width="100%">
+                <el-option v-for="(item,value) in productList"
+                           :key="value"
+                           :label="item.product_name"
                            :value="item.id">
                 </el-option>
               </el-select>
@@ -179,6 +201,7 @@
   import { getProjectList, getProjectTypeList, addProject, updateProject } from '@/api/project'
   import { getCloudResourceList } from '@/api/resource'
   import { getGroupsList, getUserList } from '@/api/users'
+  import { getProduct } from '@/api/product'
 
   export default {
     name: 'Project',
@@ -189,17 +212,19 @@
         dialogTitle: '',
         page: 1,
         projectTotalNum: 0,
-        productList: [],
+        projectList: [],
         projectTypeList: [],
         instanceList: [],
         groupList: [],
         userList: [],
+        productList: [],
         projectForm: {
           id: '',
           project_name: '',
           github_repo_url: '',
           belong_group_id: '',
           project_type_id: '',
+          belong_product_id: '',
           deployment_server_dev_id: '',
           deployment_server_prod_id: '',
           ops_users: [],
@@ -244,6 +269,11 @@
           }
         )
       },
+      fetchProductList(params) {
+        getProduct(params).then(res => {
+          this.productList = res.results
+        })
+      },
       handleRefresh() {
         this.fetchProjectList()
       },
@@ -267,12 +297,16 @@
       handleEditProject(row) {
         this.dialogVisible = true
         this.dialogTitle = 'Update'
-        const { id, project_name, belong_group_id, project_type, project_type_id, deployment_server_dev, deployment_server_dev_id, deployment_server_prod, deployment_server_prod_id, github_repo_url, ops_users, dev_users, description } = row
-        this.projectForm = { id, project_name, belong_group_id, project_type, project_type_id, deployment_server_dev, deployment_server_dev_id, deployment_server_prod, deployment_server_prod_id, github_repo_url, ops_users, dev_users, description }
+        const { id, project_name, belong_group_id, belong_product_id, belong_product, project_type, project_type_id, deployment_server_dev, deployment_server_dev_id, deployment_server_prod, deployment_server_prod_id, github_repo_url, ops_users, dev_users, description } = row
+        this.projectForm = { id, project_name, belong_group_id, belong_product_id, belong_product, project_type, project_type_id, deployment_server_dev, deployment_server_dev_id, deployment_server_prod, deployment_server_prod_id, github_repo_url, ops_users, dev_users, description }
       },
       handleSaveProject() {
         if (this.dialogTitle === 'Create') {
-          delete this.projectForm.id
+          // delete this.projectForm.id
+          this.projectForm.belong_group = this.projectForm.belong_group_id
+          this.projectForm.belong_product = this.projectForm.belong_product_id
+          this.projectForm.deployment_server_dev = this.projectForm.deployment_server_dev_id
+          this.projectForm.deployment_server_prod = this.projectForm.deployment_server_prod_id
           addProject(this.projectForm).then(() => {
             this.$message({
               message: 'ADD SUCCESS',
@@ -304,6 +338,7 @@
       this.fetchGroupList()
       this.fetchCloudSeverList()
       this.fetchUserList()
+      this.fetchProductList()
     }
   }
 </script>

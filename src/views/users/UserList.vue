@@ -4,8 +4,8 @@
       <el-row :gutter="24">
         <el-col :span="6">
           <el-input
-            size='small'
-            placeholder="搜索"
+            size='mini'
+            placeholder="Search user"
             v-model="search_user_key"
             @keyup.enter.native="searchClick">
             <el-button
@@ -18,9 +18,9 @@
         <el-col :span="6">
           <el-button
             type="primary"
-            size="small"
+            size="mini"
             @click="addClick">
-            添加用户
+            Add User
           </el-button>
         </el-col>
       </el-row>
@@ -28,21 +28,26 @@
     <el-table
       v-loading="loading"
       stripe
-      element-loading-text="拼命加载中"
+      element-loading-text="loading"
       :data="userList">
       <el-table-column
         prop="username"
-        label="用户名"
+        label="User Name"
         align="center">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
+        label="Real Name"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="github_username"
+        label="Github Account"
         align="center">
       </el-table-column>
       <el-table-column
         prop="phone"
-        label="手机号"
+        label="Mobile Phone"
         align="center">
       </el-table-column>
       <el-table-column
@@ -52,7 +57,7 @@
       </el-table-column>
       <el-table-column
         prop="is_active"
-        label="登录状态"
+        label="Login Status"
         align="center">
         <template
           slot-scope="scope">
@@ -66,12 +71,12 @@
       </el-table-column>
       <el-table-column
         prop="last_login"
-        label="上次登陆时间"
+        label="Last Login Time"
         align="center">
       </el-table-column>
       <el-table-column
         prop=""
-        label="操作"
+        label="Options"
         width="400"
         align="center">
         <template
